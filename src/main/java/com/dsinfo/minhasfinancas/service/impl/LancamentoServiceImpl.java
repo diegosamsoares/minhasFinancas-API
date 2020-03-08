@@ -3,6 +3,7 @@ package com.dsinfo.minhasfinancas.service.impl;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dsinfo.minhasfinancas.model.entity.Lancamento;
 import com.dsinfo.minhasfinancas.model.enums.StatusLancamento;
+import com.dsinfo.minhasfinancas.model.enums.TipoLancamento;
 import com.dsinfo.minhasfinancas.model.repository.LancamentoRepository;
 import com.dsinfo.minhasfinancas.service.LancamentoService;
 import com.dsinfo.minhasfinancas.service.exception.RegraNegocioException;
@@ -91,6 +93,28 @@ public class LancamentoServiceImpl implements LancamentoService{
 		if(lancamento.getTipo()==null) {
 			throw new RegraNegocioException("Informe um valor válido");
 		}
+	}
+
+	@Override
+	public Optional<Lancamento> buscarPorId(Long id) {
+		// TODO Auto-generated method stub
+		return lancamentoRepository.findById(id);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public BigDecimal consultarSaldoPorUsuario(Long id) {
+		BigDecimal saldoReceita = lancamentoRepository.obterSaldoPorTipoLancamentoUsuario(id, TipoLancamento.RECEITA);
+		BigDecimal saldoDespesa = lancamentoRepository.obterSaldoPorTipoLancamentoUsuario(id, TipoLancamento.DESPESA);
+		
+		if(saldoReceita ==null ) {
+			saldoReceita = BigDecimal.ZERO;
+		}
+		if(saldoDespesa ==null ) {
+			saldoDespesa = BigDecimal.ZERO;
+		}
+		
+		return saldoReceita.subtract(saldoDespesa);
 	}
 
 }

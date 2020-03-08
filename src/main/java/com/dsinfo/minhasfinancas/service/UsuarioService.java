@@ -1,5 +1,7 @@
 package com.dsinfo.minhasfinancas.service;
 
+import java.util.Optional;
+
 import com.dsinfo.minhasfinancas.model.entity.Usuario;
 
 public interface UsuarioService {
@@ -11,4 +13,6 @@ public interface UsuarioService {
 	void validarEmail(String email);
 
 	Usuario alterarUsuario(Usuario usuario);
+	
+	Optional<Usuario> buscarPeloId(Long id);
 }

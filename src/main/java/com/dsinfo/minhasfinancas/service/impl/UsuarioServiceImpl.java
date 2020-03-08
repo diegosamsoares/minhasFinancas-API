@@ -59,4 +59,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	}
 
+	@Override
+	public Optional<Usuario> buscarPeloId(Long id) {
+		// TODO Auto-generated method stub
+		return repository.findById(id);
+	}
+
 }
