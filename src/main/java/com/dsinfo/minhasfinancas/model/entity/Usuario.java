@@ -12,6 +12,8 @@ import javax.persistence.Table;
 
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "usuario", schema = "financas")
 public class Usuario {
@@ -28,6 +30,7 @@ public class Usuario {
 	private String email;
 
 	@Column(name = "senha")
+	@JsonIgnore
 	private String senha;
 	
 	@Column(name="data_cadastro")
