@@ -61,7 +61,6 @@ public class UsuarioController {
 	@GetMapping("{id}/saldo")
 	public ResponseEntity consultarSaldo(@PathVariable("id") Long id) {
 		try {
-
 			Optional<Usuario> usuario = usuarioService.buscarPeloId(id);
 			if(!usuario.isPresent()) {
 				return new ResponseEntity(HttpStatus.NOT_FOUND);
